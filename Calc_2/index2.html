@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор теплоти згоряння мазуту</title>
+    <script src="calculator2.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Comfortaa, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #35b5ff, #050433);
+            color: white;
+        }
+        .container {
+            display: flex;
+            width: 1100px;
+            max-height: 1000px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .form-container {
+            width: 70%;
+            padding: 30px;
+            background: linear-gradient(135deg, #050433, #35b5ff);
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .input-group label {
+            width: 49%;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 2px solid white;
+            background: transparent;
+            border-radius: 5px;
+            font-size: 14px;
+            color: white;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        input:focus {
+            outline: none;
+            border-color: #deb8f5;
+        }
+        button {
+            width: 99.5%;
+            background-color: #000000;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            color: #000000;
+            background-color: #F9F9F9;
+            font-weight: bold;
+        }
+        .results-container {
+            width: 30%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background: #F9F9F9;
+            color: black;
+            text-align: left;
+            white-space: pre-line; 
+        }
+        .results-container h2 {
+            color: #432371;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            white-space: pre-line; 
+        }
+        .result-text {
+            font-size: 13px;
+            margin-bottom: 10px;
+            color: #333;
+            line-height: 1.4;
+            white-space: pre-line; 
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Калькулятор теплоти згоряння мазуту</h2>
+            <form id="fuelForm">
+                <div class="input-group">
+                    <label>Вміст вуглецю (C<sup>Г</sup>), %: <input type="number" id="carbon" step="0.01" required></label>
+                    <label>Вміст водню (H<sup>Г</sup>), %: <input type="number" id="hydrogen" step="0.01" required></label>
+                    <label>Вміст кисню (O<sup>Г</sup>), %:: <input type="number" id="oxygen" step="0.01" required></label>
+                    <label>Вміст сірки (S<sup>Г</sup>), %: <input type="number" id="sulfur" step="0.01" required></label>
+                    <label>Нижча т. згоряння, (Qi<sup>daf</sup>), МДж/кг: <input type="number" id="q_daf" step="0.01" required></label>
+                    <label>Вологість (W<sup>Г</sup>), %: <input type="number" id="moisture" step="0.01" required></label>
+                    <label>Вміст золи (A<sup>Г</sup>), %: <input type="number" id="ash" step="0.01" required></label>
+                    <label>Вміст ванадію (V<sup>Г</sup>), (мг/кг): <input type="number" id="vanadium" step="0.01" required></label>
+                </div>
+                <button type="submit">Розрахувати →</button>
+            </form>
+        </div>
+        <div class="results-container" id="results">
+            <h2>Результат</h2>
+            <div id="result"></div> 
+        </div>
+        
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор складу палива</title>
+    <script defer src="functions.js"></script>
+    <script defer src="calculator.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Comfortaa, thin;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ef745c, #34073d);
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            width: 1000px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container {
+            width: 50%;
+            padding: 30px;
+            background: linear-gradient(135deg, #34073d, #ef745c);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 2px solid white;
+            background: transparent;
+            border-radius: 5px;
+            font-size: 16px;
+            color: white;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #deb8f5;
+        }
+
+        button {
+            width: 100%;
+            background-color: #000000;
+            color: white;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            color: #000000;
+            background-color: #F9F9F9;
+            font-weight: bold;
+            
+        }
+
+        .results-container {
+            width: 50%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background: #F9F9F9;
+            color: black;
+            text-align: left;
+            position: relative;
+            white-space: pre-line;
+        }
+
+        .results-container h2 {
+            color: #432371;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            white-space: pre-line;
+        }
+
+        .result-text {
+            font-size: 4px;
+            margin-bottom: 10px;
+            color: #333;
+            line-height: 1.4;
+            white-space: pre-line; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Калькулятор складу палива</h2>
+            <form id="fuelForm">
+                <label for="H">Вміст водню (H<sup>P</sup>), %:</label>
+                <input type="number" id="H" step="0.01" required>
+
+                <label for="C">Вміст вуглецю (C<sup>P</sup>), %:</label>
+                <input type="number" id="C" step="0.01" required>
+
+                <label for="S">Вміст сірки (S<sup>P</sup>), %:</label>
+                <input type="number" id="S" step="0.01" required>
+
+                <label for="N">Вміст азоту (N<sup>P</sup>), %:</label>
+                <input type="number" id="N" step="0.01" required>
+
+                <label for="O">Вміст кисню (O<sup>P</sup>), %:</label>
+                <input type="number" id="O" step="0.01" required>
+
+                <label for="W">Вологість (W<sup>P</sup>), %:</label>
+                <input type="number" id="W" step="0.01" required>
+
+                <label for="A">Вміст золи (A<sup>P</sup>), %:</label>
+                <input type="number" id="A" step="0.01" required>
+
+                <button type="submit">Розрахувати →</button>
+            </form>
+        </div>
+        <div class="results-container" id="results">
+            <h2>Результат</h2>
+            <div id="resultContent"></div> 
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
