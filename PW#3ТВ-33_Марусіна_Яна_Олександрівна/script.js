@@ -3,11 +3,11 @@ function calc() {
     let delta = parseFloat(document.getElementById("delta").value);
     let tarif = parseFloat(document.getElementById("tarif").value);
 
-    let energyWithoutPenalty = power * 24 * 0.68;
-    let energyWithPenalty = power * 24 * 0.32;
-    let income = energyWithoutPenalty * tarif * 1000;
-    let fine = energyWithPenalty * tarif * 1000;
-    let netProfit = income - fine;
+    let energyWithoutPenalty = power * 24 * 0.68; // Спожиток енергії без штрафу
+    let energyWithPenalty = power * 24 * 0.32; // Спожиток енергії зі штрафом
+    let income = energyWithoutPenalty * tarif * 1000; // конвертація в тис. грн, прибуток
+    let fine = energyWithPenalty * tarif * 1000; // конвертація в тис. грн, штраф
+    let netProfit = income - fine; // збиток
 
     console.log("Енергія без штрафу:", energyWithoutPenalty, "кВт·год");
     console.log("Енергія зі штрафом:", energyWithPenalty, "кВт·год");
