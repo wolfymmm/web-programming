@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="tabs">
+        <div class="tab active" onclick="openTab('reliability')">Надійність систем</div>
+        <div class="tab" onclick="openTab('losses')">Збитки від перерв</div>
+    </div>
+    
+    <div class="container">
+        <div class="input-section">
+            <div id="reliability-input" class="tab-content active">
+                <h2>Параметри систем</h2>
+                
+                <h3>Одноколова система</h3>
+                
+                <div class="input-group">
+                    <label for="breaker110">Частота відмов елегазового вимикача 110 кВ (рік⁻¹):</label>
+                    <input type="number" id="breaker110" step="0.001" value="0.01">
+                </div>
+                
+                <div class="input-group">
+                    <label for="line110">Частота відмов ПЛ-110 кВ (рік⁻¹):</label>
+                    <input type="number" id="line110" step="0.001" value="0.07">
+                </div>
+                
+                <div class="input-group">
+                    <label for="transformer">Частота відмов трансформатора 110/10 кВ (рік⁻¹):</label>
+                    <input type="number" id="transformer" step="0.001" value="0.015">
+                </div>
+                
+                <div class="input-group">
+                    <label for="breaker10">Частота відмов ввідного вимикача 10 кВ (рік⁻¹):</label>
+                    <input type="number" id="breaker10" step="0.001" value="0.02">
+                </div>
+                
+                <div class="input-group">
+                    <label for="connections">Частота відмов одного приєднання 10 кВ (рік⁻¹):</label>
+                    <input type="number" id="connections" step="0.001" value="0.03">
+                </div>
+                
+                <div class="input-group">
+                    <label for="numConnections">Кількість приєднань 10 кВ:</label>
+                    <input type="number" id="numConnections" value="6">
+                </div>
+                
+                <h4>Час відновлення (год)</h4>
+                
+                <div class="input-group">
+                    <label for="t_breaker110">Час відновлення елегазового вимикача 110 кВ:</label>
+                    <input type="number" id="t_breaker110" value="30">
+                </div>
+                
+                <div class="input-group">
+                    <label for="t_line110">Час відновлення ПЛ-110 кВ:</label>
+                    <input type="number" id="t_line110" value="10">
+                </div>
+                
+                <div class="input-group">
+                    <label for="t_transformer">Час відновлення трансформатора 110/10 кВ:</label>
+                    <input type="number" id="t_transformer" value="100">
+                </div>
+                
+                <div class="input-group">
+                    <label for="t_breaker10">Час відновлення ввідного вимикача 10 кВ:</label>
+                    <input type="number" id="t_breaker10" value="15">
+                </div>
+                
+                <div class="input-group">
+                    <label for="t_connections">Час відновлення приєднання 10 кВ:</label>
+                    <input type="number" id="t_connections" value="2">
+                </div>
+                
+                <div class="input-group">
+                    <label for="plannedOutage">Максимальний плановий простій (год/рік):</label>
+                    <input type="number" id="plannedOutage" value="43">
+                </div>
+                
+                <h3>Двоколова система</h3>
+                
+                <div class="input-group">
+                    <label for="sectionBreaker">Частота відмов секціонного вимикача 10 кВ (рік⁻¹):</label>
+                    <input type="number" id="sectionBreaker" step="0.001" value="0.02">
+                </div>
+                
+                <button onclick="calculateReliability()">Розрахувати</button>
+            </div>
+            
+            <div id="losses-input" class="tab-content">
+                <h2>Параметри для розрахунку збитків</h2>
+                
+                <div class="input-group">
+                    <label for="failureRate">Частота відмов трансформатора (рік⁻¹):</label>
+                    <input type="number" id="failureRate" step="0.001" value="0.01">
+                </div>
+                
+                <div class="input-group">
+                    <label for="recoveryTime">Середній час відновлення (год):</label>
+                    <input type="number" id="recoveryTime" value="45">
+                </div>
+                
+                <div class="input-group">
+                    <label for="plannedOutageTime">Середній час планового простою (год/рік):</label>
+                    <input type="number" id="plannedOutageTime" value="4">
+                </div>
+                
+                <div class="input-group">
+                    <label for="maxLoad">Максимальне навантаження, P<sub>M</sub> (кВт):</label>
+                    <input type="number" id="maxLoad" value="5120">
+                </div>
+                
+                <div class="input-group">
+                    <label for="usageTime">Час використання максимального навантаження, T<sub>M</sub> (год/рік):</label>
+                    <input type="number" id="usageTime" value="6451">
+                </div>
+                
+                <div class="input-group">
+                    <label for="emergencyLossRate">Питомі збитки від аварійних вимкнень (грн./кВт·год):</label>
+                    <input type="number" id="emergencyLossRate" step="0.1" value="23.6">
+                </div>
+                
+                <div class="input-group">
+                    <label for="plannedLossRate">Питомі збитки від планових вимкнень (грн./кВт·год):</label>
+                    <input type="number" id="plannedLossRate" step="0.1" value="17.6">
+                </div>
+                
+                <button onclick="calculateLosses()">Розрахувати</button>
+            </div>
+        </div>
+        
+        <div class="result-section">
+            <div id="reliability-result" class="tab-content active">
+                <h2>Результат розрахунку</h2>
+                <div class="result">
+                    <table>
+                        <tr>
+                            <th>Параметр</th>
+                            <th>Одноколова система</th>
+                            <th>Двоколова система</th>
+                        </tr>
+                        <tr>
+                            <td>Частота відмов (рік⁻¹)</td>
+                            <td id="failureRateOC">-</td>
+                            <td id="failureRateDC">-</td>
+                        </tr>
+                        <tr>
+                            <td>Середній час відновлення (год)</td>
+                            <td id="recoveryTimeOC">-</td>
+                            <td id="recoveryTimeDC">-</td>
+                        </tr>
+                        <tr>
+                            <td>Коефіцієнт аварійного простою</td>
+                            <td id="emergencyOutageOC">-</td>
+                            <td id="emergencyOutageDC">-</td>
+                        </tr>
+                        <tr>
+                            <td>Коефіцієнт планового простою</td>
+                            <td id="plannedOutageOC">-</td>
+                            <td id="plannedOutageDC">-</td>
+                        </tr>
+                    </table>
+                    <div id="reliabilityConclusion" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+            
+            <div id="losses-result" class="tab-content">
+                <h2>Результат розрахунку</h2>
+                <div class="result">
+                    <div class="formula">
+                        M(W<sub>нед.а</sub>) = ω × t<sub>B</sub> × P<sub>M</sub> × T<sub>M</sub> = 
+                        <span id="w_failureRate">-</span> × <span id="w_recoveryTime">-</span> × 
+                        <span id="w_maxLoad">-</span> × <span id="w_usageTime">-</span> = 
+                        <span id="emergencyUndersupply">-</span> кВт·год
+                    </div>
+                    
+                    <div class="formula">
+                        M(W<sub>нед.п</sub>) = k<sub>n</sub> × P<sub>M</sub> × T<sub>M</sub> = 
+                        <span id="p_plannedOutage">-</span> × <span id="p_maxLoad">-</span> × 
+                        <span id="p_usageTime">-</span> = <span id="plannedUndersupply">-</span> кВт·год
+                    </div>
+                    
+                    <div class="formula">
+                        M(3<sub>пер</sub>) = 3<sub>пер.а</sub> × M(W<sub>нед.а</sub>) + 3<sub>пер.п</sub> × M(W<sub>нед.п</sub>) = 
+                        <span id="l_emergencyRate">-</span> × <span id="l_emergencyUndersupply">-</span> + 
+                        <span id="l_plannedRate">-</span> × <span id="l_plannedUndersupply">-</span> = 
+                        <span id="totalLosses">-</span> грн.
+                    </div>
+                    
+                    <table>
+                        <tr>
+                            <th>Показник</th>
+                            <th>Значення</th>
+                        </tr>
+                        <tr>
+                            <td>Аварійне недовідпущення електроенергії (кВт·год/рік)</td>
+                            <td id="emergencyResult">-</td>
+                        </tr>
+                        <tr>
+                            <td>Планове недовідпущення електроенергії (кВт·год/рік)</td>
+                            <td id="plannedResult">-</td>
+                        </tr>
+                        <tr>
+                            <td>Загальні збитки від перерв (грн/рік)</td>
+                            <td id="totalResult">-</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
