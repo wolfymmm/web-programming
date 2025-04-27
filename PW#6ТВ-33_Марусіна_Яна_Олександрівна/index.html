@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор електричних навантажень</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Калькулятор електричних навантажень</h1>
+    <table id="input-table">
+        <thead>
+            <tr>
+                <th rowspan="2">Найменування ЕП</th>
+                <th rowspan="2">n</th>
+                <th rowspan="2">P<sub>н</sub>, кВт</th>
+                <th rowspan="2">η<sub>н</sub></th>
+                <th rowspan="2">cosφ</th>
+                <th colspan="2">Розрахункові струми ЕП</th>
+                <th rowspan="2">K<sub>в</sub></th>
+                <th rowspan="2">tgφ</th>
+                <th colspan="4">Проміжні розрахунки</th>
+            </tr>
+            <tr>
+                <th>n·P<sub>н</sub></th>
+                <th>I<sub>p</sub>, A</th>
+                <th>n·P<sub>н</sub>·K<sub>в</sub></th>
+                <th>n·P<sub>н</sub>·K<sub>в</sub>·tgφ</th>
+                <th>n·P<sub>н</sub><sup>2</sup></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Всього ШР1</th>
+                <th id="total-n">0</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th id="total-np">0</th>
+                <th id="total-ip">0</th>
+                <th></th>
+                <th></th>
+                <th id="total-npk">0</th>
+                <th id="total-npktg">0</th>
+                <th id="total-np2">0</th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <button onclick="calculateAll()">Розрахувати</button>
+    <div id="results-container">
+    <div id="results-shop">
+        <h3>Результати розрахунків для ШР1</h3>
+        <div class="formula">
+            Груповий коефіцієнт використання:
+            K<sub>в</sub> = Σ(n·P<sub>н</sub>·K<sub>в</sub>) / Σ(n·P<sub>н</sub>) = 
+            <span id="sum-npk">0</span> / <span id="sum-np">0</span> = <span id="kv-result" class="result">0</span>
+        </div>
+        <div class="formula">
+            Ефективна кількість ЕП:
+            n<sub>e</sub> = (Σ(n·P<sub>н</sub>))² / Σ(n·P<sub>н</sub>²) = 
+            <span id="sum-np-2">0</span>² / <span id="sum-np2">0</span> = <span id="ne-result" class="result">0</span> ≈ <span id="ne-rounded">0</span>
+        </div>
+        <div class="formula">
+            Розрахунковий коефіцієнт активної потужності:
+            K<sub>p</sub> = <span id="kp-result" class="result">0</span>
+        </div>
+        <div class="formula">
+            Розрахункове активне навантаження:
+            P<sub>p</sub> = K<sub>p</sub>·K<sub>в</sub>·P<sub>н</sub> = 
+            <span id="kp-value">0</span> × <span id="sum-npk-value">0</span> = <span id="pp-result" class="result">0</span> кВт
+        </div>
+        <div class="formula">
+            Розрахункове реактивне навантаження:
+            Q<sub>p</sub> = 1.0·K<sub>в</sub>·P<sub>н</sub>·tgφ = 
+            1.0 × <span id="sum-npktg-value">0</span> = <span id="qp-result" class="result">0</span> квар
+        </div>
+        <div class="formula">
+            Повна потужність:
+            S<sub>p</sub> = √(P<sub>p</sub>² + Q<sub>p</sub>²) = 
+            √(<span id="pp-value">0</span>² + <span id="qp-value">0</span>²) = <span id="sp-result" class="result">0</span> кВ·А
+        </div>
+        <div class="formula">
+            Розрахунковий груповий струм:
+            I<sub>p</sub> = P<sub>p</sub> / U<sub>н</sub> = 
+            <span id="pp-value2">0</span> / 0.38 = <span id="ip-result" class="result">0</span> А
+        </div>
+    </div>
+
+    <div id="results-workshop">
+        <h3>Розрахунок для всього цеху</h3>
+        <div class="formula">
+            Коефіцієнт використання цеху:
+            K<sub>в</sub> = Σ(K<sub>вi</sub>·P<sub>Hi</sub>) / ΣP<sub>Hi</sub> = 
+            <span id="sum-workshop-kp">0</span> / <span id="sum-workshop-p">0</span> = <span id="kv-workshop" class="result">0</span>
+        </div>
+        <div class="formula">
+            Ефективна кількість ЕП цеху:
+            n<sub>e</sub> = (Σ(n·P<sub>н</sub>))² / Σ(n·P<sub>н</sub>²) = 
+            <span id="sum-workshop-np">0</span>² / <span id="sum-workshop-np2">0</span> = <span id="ne-workshop" class="result">0</span> ≈ <span id="ne-workshop-rounded">0</span>
+        </div>
+        <div class="formula">
+            Розрахунковий коефіцієнт активної потужності:
+            K<sub>p</sub> = <span id="kp-workshop" class="result">0</span>
+        </div>
+        <div class="formula">
+            Розрахункове активне навантаження:
+            P<sub>p</sub> = K<sub>p</sub>·K<sub>в</sub>·P<sub>н</sub> = 
+            <span id="kp-workshop-value">0</span> × <span id="sum-workshop-kp-value">0</span> = <span id="pp-workshop" class="result">0</span> кВт
+        </div>
+        <div class="formula">
+            Розрахункове реактивне навантаження:
+            Q<sub>p</sub> = K<sub>p</sub>·K<sub>в</sub>·P<sub>н</sub>·tgφ = 
+            <span id="kp-workshop-value2">0</span> × <span id="sum-workshop-npktg">0</span> = <span id="qp-workshop" class="result">0</span> квар
+        </div>
+        <div class="formula">
+            Повна потужність:
+            S<sub>p</sub> = √(P<sub>p</sub>² + Q<sub>p</sub>²) = 
+            √(<span id="pp-workshop-value">0</span>² + <span id="qp-workshop-value">0</span>²) = <span id="sp-workshop" class="result">0</span> кВ·А
+        </div>
+        <div class="formula">
+            Розрахунковий груповий струм:
+            I<sub>p</sub> = P<sub>p</sub> / U<sub>н</sub> = 
+            <span id="pp-workshop-value2">0</span> / 0.38 = <span id="ip-workshop" class="result">0</span> А
+        </div>
+    </div>
+</div>
+</body>
+</html>
